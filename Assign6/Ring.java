@@ -1,141 +1,131 @@
-
-import java.util.Scanner;
+import java.util.*;
 
 public class Ring {
+    int max_processes;
+    int coordinator;
+    boolean processes[];
+    ArrayList<Integer> pid;
 
-	public static void main(String[] args) {
+    public Ring(int max) {
+        coordinator = max;
+        max_processes = max;
+        pid = new ArrayList<Integer>();
+        processes = new boolean[max];
 
-		// TODO Auto-generated method stub
+        for(int i = 0; i < max; i++) {
+            processes[i] = true;
+            System.out.println("P" + (i+1) + " created.");
+        }
+        System.out.println("P" + (coordinator) + " is the coordinator");
+    }
 
-		int temp, i, j;
-		char str[] = new char[10];
-		Rr proc[] = new Rr[10];
+    void displayProcesses() {
+        for(int i = 0; i < max_processes; i++) {
+            if(processes[i]) 
+                System.out.println("P" + (i+1) + " is up.");
+            else
+                System.out.println("P" + (i+1) + " is down.");
+        }   
+        System.out.println("P" + (coordinator) + " is the coordinator");
+    }
 
-// object initialisation
-		for (i = 0; i < proc.length; i++)
-			proc[i] = new Rr();
+    void upProcess(int process_id) {
+        if(!processes[process_id-1]) {
+            processes[process_id-1] = true;
+            System.out.println("Process P" + (process_id) + " is up.");
+        } else {
+            System.out.println("Process P" + (process_id) + " is already up.");
+        }
+    }
 
-// scanner used for getting input from console
-		Scanner in = new Scanner(System.in);
-		System.out.println("Enter the number of process : ");
-		int num = in.nextInt();
+    void downProcess(int process_id) {
+        if(!processes[process_id-1]) {
+            System.out.println("Process P" + (process_id) + " is already down.");
+        } else {
+            processes[process_id-1] = false;
+            System.out.println("Process P" + (process_id) + " is down.");
+        }
+    }
 
-// getting input from users
-		for (i = 0; i < num; i++) {
-			proc[i].index = i;
-			System.out.println("Enter the id of process : ");
-			proc[i].id = in.nextInt();
-			proc[i].state = "active";
-			proc[i].f = 0;
-		}
+    void displayArrayList(ArrayList<Integer> pid) {
+        System.out.print("[ ");
+        for(Integer x : pid) {
+            System.out.print(x + " ");
+        }
+        System.out.print(" ]\n");
+    }
 
+    void initElection(int process_id) {
+        if(processes[process_id-1]) {
+            pid.add(process_id);
 
-// sorting the processes from on the basis of id
-		for (i = 0; i < num - 1; i++) {
-			for (j = 0; j < num - 1; j++) {
-				if (proc[j].id > proc[j + 1].id) {
-					temp = proc[j].id;
-					proc[j].id = proc[j + 1].id;
-					proc[j + 1].id = temp;
-				}
-			}
-		}
+            int temp = process_id;
 
+            System.out.print("Process P" + process_id + " sending the following list:- ");
+            displayArrayList(pid);
 
-		for (i = 0; i < num; i++) {
-			System.out.print("  [" + i + "]" + " " + proc[i].id);
-		}
+            while(temp != process_id - 1) {
+                if(processes[temp]) {
+                    pid.add(temp+1);
+                    System.out.print("Process P" + (temp + 1) + " sending the following list:- ");
+                    displayArrayList(pid);
+                }
+                temp = (temp + 1) % max_processes;
+            }
+            coordinator = Collections.max(pid);
+            System.out.println("Process P" + process_id + " has declared P" + coordinator + " as the coordinator");
+            pid.clear();
+        }
+    }
 
+    public static void main(String args[]) {
+        Ring ring = null;
+        int max_processes = 0, process_id = 0;
+        int choice = 0;
+        Scanner sc = new Scanner(System.in);
 
+        while(true) {
+            System.out.println("Ring Algorithm");
+            System.out.println("1. Create processes");
+            System.out.println("2. Display processes");
+            System.out.println("3. Up a process");
+            System.out.println("4. Down a process");
+            System.out.println("5. Run election algorithm");
+            System.out.println("6. Exit Program");
+            System.out.print("Enter your choice:- ");
+            choice = sc.nextInt();
 
-
-		int init;
-		int ch;
-		int temp1;
-		int temp2;
-		int ch1;
-		int arr[] = new int[10];
-
-		proc[num - 1].state = "inactive";
-
-		System.out.println("\n process " + proc[num - 1].id + "select as co-ordinator");
-
-		while (true) {
-			System.out.println("\n 1.election 2.quit ");
-			ch = in.nextInt();
-
-			for (i = 0; i < num; i++) {
-				proc[i].f = 0;
-			}
-
-			switch (ch) {
-			case 1:
-				System.out.println("\n Enter the Process number who initialsied election : ");
-				init = in.nextInt();
-				temp2 = init;
-				temp1 = init + 1;
-
-				i = 0;
-
-				while (temp2 != temp1) {
-					if ("active".equals(proc[temp1].state) && proc[temp1].f == 0) {
-
-						System.out.println("\nProcess " + proc[init].id + " send message to " + proc[temp1].id);
-						proc[temp1].f = 1;
-						init = temp1;
-						arr[i] = proc[temp1].id;
-						i++;
-					}
-					if (temp1 == num) {
-						temp1 = 0;
-					} else {
-						temp1++;
-					}
-				}
-
-				System.out.println("\nProcess " + proc[init].id + " send message to " + proc[temp1].id);
-				arr[i] = proc[temp1].id;
-				i++;
-				int max = -1;
-
-
-// finding maximum for co-ordinator selection
-				for (j = 0; j < i; j++) {
-					if (max < arr[j]) {
-						max = arr[j];
-					}
-				}
-
-// co-ordinator is found then printing on console
-				System.out.println("\n process " + max + "select as co-ordinator");
-
-
-				for (i = 0; i < num; i++) {
-
-					if (proc[i].id == max) {
-						proc[i].state = "inactive";
-					}
-				}
-				break;
-			case 2:
-            System.out.println("Program terminated ...");
-            return ;
-			default:
-				System.out.println("\n invalid response \n");
-				break;
-			}
-
-
-		}
-	}
-
-}
-
-class Rr {
-
-	public int index;   // to store the index of process
-	public int id;      // to store id/name of process
-	public int f;
-	String state;       // indiactes whether active or inactive state of node
-
+            switch(choice) {
+                case 1:
+                    System.out.print("Enter the total number of processes:- ");
+                    max_processes = sc.nextInt();
+                    ring = new Ring(max_processes);
+                    break;
+                case 2:
+                    ring.displayProcesses();
+                    break;
+                case 3:
+                    System.out.print("Enter the process to up:- ");
+                    process_id = sc.nextInt();
+                    ring.upProcess(process_id);
+                    break;
+                case 4:
+                    System.out.print("Enter the process to down:- ");
+                    process_id = sc.nextInt();
+                    ring.downProcess(process_id);
+                    break;
+                case 5:
+                    System.out.print("Enter the process which will initiate election:- ");
+                    process_id = sc.nextInt();
+                    ring.initElection(process_id);
+                    break;
+                case 6:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Error in choice. Please try again.");
+                    break;
+            }
+        }
+    }
 }
