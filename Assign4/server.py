@@ -1,6 +1,4 @@
 # Python3 program imitating a clock server
-
-from functools import reduce
 from dateutil import parser
 import threading
 import datetime
@@ -56,7 +54,6 @@ def startConnecting(master_server):
 # subroutine function used to fetch average clock difference
 def getAverageClockDiff():
 
-	current_client_data = client_data.copy()
 
 	time_difference_list = list(client['time_difference']
 								for client_addr, client
