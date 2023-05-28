@@ -89,3 +89,19 @@ Terminal
     java Bully
     javac Ring.java
     java Ring
+    
+### Assignment 7:
+
+    https://www.youtube.com/watch?v=0z-HvSfr-M4&t=381s
+    
+### Extra:
+
+Terminal 1:
+
+    javac *.java
+    java Server
+ Reminal 2:
+ 
+    java Client
+    
+    
