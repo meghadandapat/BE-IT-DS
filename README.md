@@ -13,9 +13,7 @@
 |[Assignment 7](Assign7)| Create a simple web service and write distributed application(calculator) to consume the Web Service.|
 |[Extra](Sockets)| Develop any distributed application for implementing client-server communication programs based on Java Sockets.|
 
-<hr>
-
-#Execution Steps
+## Execution Steps
 
 
 ### Pre-requisites: Install JDK-8
