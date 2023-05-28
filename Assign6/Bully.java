@@ -1,3 +1,22 @@
+/* 
+In display process func print out the coordinator at end
+method definition is void methodName()
+declare the fixed size array inside constructor using processes = new boolean[max_processes];
+In runElection method keeep track of two vars, coordinator = pid and a new vard keepGoing = true
+NOw loop from pid to max_process until keepgoing is true. pid should remain < max_process
+send msg from pid to i+1;
+if any process is up in this loop then do keepgoing=false and run_lection(pid+1)
+
+public class Bully {
+    int coordinator;
+    int max_processes;
+    boolean processes[];
+
+
+
+*/
+
+
 import java.util.*;
 
 public class Bully {
@@ -114,3 +133,4 @@ public class Bully {
         }
     }
 }
+
