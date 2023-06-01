@@ -63,7 +63,7 @@ Terminal 1:
     idlj -fall ReverseModule.idl
     javac *.java ReverseModule/*.java
     orbd -ORBInitialPort 1056&
-    java ReverseServer -ORBInitialPort 1056& -ORB
+    java ReverseServer -ORBInitialPort 1056& 
 
 Terminal 2:
 
