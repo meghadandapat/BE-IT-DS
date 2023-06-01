@@ -24,9 +24,7 @@
         sudo apt update
         sudo apt install openjdk-8-jdk openjdk-8-jre
     
-2. Download MPJ Express and Extract in the Downloads dir
-
-         https://sourceforge.net/projects/mpjexpress/files/releases/mpj-v0_44.tar.gz/download
+2. Download [MPJ Express](https://sourceforge.net/projects/mpjexpress/files/releases/mpj-v0_44.tar.gz/download) and extract in the Downloads dir         
  
  3. Install Apache Netbeans
             
@@ -107,7 +105,7 @@ Terminal
     
 ### Assignment 7:
 
-    https://www.youtube.com/watch?v=0z-HvSfr-M4&t=381s
+   [Youtube tutorial](https://www.youtube.com/watch?v=0z-HvSfr-M4)
     
 ### Extra:
 
